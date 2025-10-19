@@ -12,9 +12,11 @@ You will need to publish the InfloUserManagerDatabase project in order to run th
 The application will run as-is. The User table has not been seeded in order for the assessor of this application to use the Create User functionality. Add two or more users with different statuses to be able to
 use the sorting functionality (each column header on the Users index page is clickable to allow sorting) and use the filtering dropdown list to change the view to All / Active / Inactive as desired.
 
-# NB
+# Tests
 
-The tests are all in two different categories: Controller Tests and Handler Tests.
+The tests are in two different categories: Controller Tests and Handler Tests.
+
+Additionally, Scalar has been implemented to enable testing of the API.
 
 # ToDo
 
@@ -28,7 +30,7 @@ Ditto an Address table.
 
 Add the functionality to be able to assign a 'Manager' to each user.
 
-Etc...!
+Etc, etc...!
 
 # Other Resources
 
