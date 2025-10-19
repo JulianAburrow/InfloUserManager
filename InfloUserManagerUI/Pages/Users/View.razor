@@ -1,0 +1,29 @@
+﻿@page "/user/view/{UserId:int}"
+@inherits UserBasePageClass
+
+<PageTitle>View User</PageTitle>
+
+<br />
+
+@if (UserDTO is null)
+{
+    <MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Center">Loading User or User not found...</MudAlert>
+    return;
+}
+
+<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <MudCardContent>
+                <ViewDeleteUserComponent UserDTO="UserDTO" />
+            </MudCardContent>
+            <MudCardActions>
+                <a href="user/edit/@UserDTO.UserId" class="btn btn-primary">Edit</a>
+                &nbsp;
+                <a href="user/delete/@UserDTO.UserId" class="btn btn-danger">Delete</a>
+                &nbsp;
+                <a href="/users/index" class="btn btn-secondary">Back to List</a>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>

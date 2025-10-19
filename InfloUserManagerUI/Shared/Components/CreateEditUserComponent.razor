@@ -1,0 +1,12 @@
+﻿<MudCardContent>
+    <MudTextField Label="Forename" @bind-Value="@UserDTO.Forename" AutoFocus OnlyValidateIfDirty="true" />
+    <MudTextField Label="Surname" @bind-Value="@UserDTO.Surname" />
+    <MudTextField Label="Email" @bind-Value="@UserDTO.Email" />
+    <MudDatePicker Label="Date of Birth" @bind-Date="@UserDTO.DateOfBirth" Editable />
+    <MudSelect T="int" Label="Status" @bind-Value="@UserDTO.StatusId">
+        @foreach (var userStatus in UserStatusDTOs)
+        {
+            <MudSelectItem Value="@userStatus.StatusId">@userStatus.StatusName</MudSelectItem>
+		}
+    </MudSelect>
+</MudCardContent>

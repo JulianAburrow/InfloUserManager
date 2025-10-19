@@ -1,0 +1,22 @@
+﻿@page "/user/create"
+@inherits UserBasePageClass
+
+<PageTitle>Create User</PageTitle>
+
+<EditForm Model="@UserDTO" OnValidSubmit="CreateUser">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <MudCard>
+                <CreateEditUserComponent UserDTO="@UserDTO" />
+                <MudCardActions>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    &nbsp;
+                    <a href="/users/index" class="btn btn-secondary">Cancel</a>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>

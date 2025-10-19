@@ -1,0 +1,13 @@
+﻿<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <MudCardContent>
+                <MudField Label="Forename">@UserDTO.Forename</MudField>
+                <MudField Label="Surname">@UserDTO.Surname</MudField>
+                <MudField Label="Email">@UserDTO.Email</MudField>
+                <MudField Label="Date of birth">@UserDTO.DateOfBirth?.ToString("dd/MM/yyyy")</MudField>
+                <MudField Label="Status">@UserDTO.StatusName</MudField>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>

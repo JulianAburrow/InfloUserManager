@@ -1,0 +1,31 @@
+﻿@page "/user/delete/{UserId:int}"
+@inherits UserBasePageClass
+
+<PageTitle>Delete User</PageTitle>
+
+<br />
+
+@if (UserDTO is null)
+{
+    <MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Center">Loading User or User not found...</MudAlert>
+    return;
+}
+
+<MudAlert Severity="Severity.Warning" ContentAlignment="HorizontalAlignment.Center">Are you sure you want to delete this User?</MudAlert>
+
+<br />
+
+<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <MudCardContent>
+                <ViewDeleteUserComponent UserDTO="UserDTO" />
+            </MudCardContent>
+            <MudCardActions>
+                <button class="btn btn-danger" @onclick="DeleteUser">Delete</button>
+                &nbsp;
+                <a href="/users/index" class="btn btn-secondary">Back to List</a>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>

@@ -1,0 +1,29 @@
+﻿@page "/user/edit/{UserId:int}"
+@inherits UserBasePageClass
+
+<PageTitle>Edit User</PageTitle>
+
+@if (UserDTO == null)
+{
+    <MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Center">Loading User or User not found...</MudAlert>
+    return;
+}
+
+<EditForm Model="@UserDTO" OnValidSubmit="UpdateUser">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <MudCard>
+                <CreateEditUserComponent UserDTO="@UserDTO" />
+                <MudCardActions>
+                    <input type="submit" class="btn btn-primary" value="Update" />
+                    &nbsp;
+                    <a href="/users/index" class="btn btn-secondary">Cancel</a>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>    
+
+</EditForm>

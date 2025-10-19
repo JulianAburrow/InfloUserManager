@@ -1,0 +1,76 @@
+﻿@page "/users/index"
+@inherits UserBasePageClass
+
+<PageTitle>Users</PageTitle>
+
+<a href="/user/create" class="btn btn-primary">Create User</a>
+
+<br />
+<br />
+
+@if (UserDTOs == null)
+{
+    <MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Center">Loading Users...</MudAlert>
+    return;
+}
+
+@if (UserDTOs.Count == 0)
+{
+    <MudAlert Severity="Severity.Warning" ContentAlignment="HorizontalAlignment.Center">No Users found.</MudAlert>
+    return;
+}
+
+<MudPaper Class="pa-4 mb-2">
+    <MudSelect
+        T="int"
+        Label="Filter Users"
+        @bind-Value="SelectedFilterOption"
+        @bind-Value:after="@FilterUsers"
+        style="width: 50px">
+        <MudSelectItem Value="0">All</MudSelectItem>
+        <MudSelectItem Value="1">Active</MudSelectItem>
+        <MudSelectItem Value="2">Inactive</MudSelectItem>
+    </MudSelect>
+</MudPaper>
+
+<MudTable Items="FilteredUserDTOs"
+          SortLabel="SortBy"
+          Hover
+          RowsPerPage="10"
+          FixedHeader
+          Height="700">
+    <HeaderContent>
+        <MudTh title="Sort by Forename">
+            <MudTableSortLabel SortBy="new Func<UserDTO, object>(x => x.Forename)">
+                Forename
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by Surname">
+            <MudTableSortLabel SortBy="new Func<UserDTO, object>(x => x.Surname)">
+                Surname
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by Status">
+            <MudTableSortLabel SortBy="new Func<UserDTO, object>(x => x.StatusName)">
+                Status
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.Forename</MudTd>
+		<MudTd>@context.Surname</MudTd>
+        <MudTd>@context.StatusName</MudTd>
+        <MudTd>
+            <a class="btn btn-primary" href="/user/view/@context.UserId">View</a>
+            &nbsp;
+            <a class="btn btn-primary" href="/user/edit/@context.UserId">Edit</a>
+            &nbsp;
+            <a class="btn btn-danger" href="/user/delete/@context.UserId">Delete</a>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, int.MaxValue }" />
+    </PagerContent>
+</MudTable>
+

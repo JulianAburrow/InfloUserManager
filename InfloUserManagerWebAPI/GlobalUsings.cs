@@ -1,0 +1,12 @@
+﻿global using InfloUserManagerWebAPI.Configuration;
+global using InfloUserManagerWebAPI.Data;
+global using InfloUserManagerWebAPI.DTOs;
+global using InfloUserManagerWebAPI.Extensions;
+global using InfloUserManagerWebAPI.Handlers;
+global using InfloUserManagerWebAPI.Interfaces;
+global using InfloUserManagerWebAPI.MiddleWare;
+global using InfloUserManagerWebAPI.Models;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Scalar.AspNetCore;
