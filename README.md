@@ -1,7 +1,7 @@
 # InfloUserManager
 
 This is an application to manage all the Users in a company.
-The front end is a Blazor WASM application with MudBlazor for functionality and the back end is an ASP.Net Core WebAPI.
+The front end is a Blazor WASM application with MudBlazor for functionality and the back end is an ASP.Net Core WebAPI which uses Entity Framework.
 
 # Setting Up
 
