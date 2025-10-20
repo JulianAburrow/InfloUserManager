@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InfloUserManagerWebAPI\InfloUserManagerWebAPI.csproj" />
-    <ProjectReference Include="..\WebAPI\InfloUserManagerWebAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
