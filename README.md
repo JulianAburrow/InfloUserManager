@@ -24,13 +24,7 @@ Pull the statuses in the Index page from the database rather than hard coding th
 
 Refactor the WebAPI project to use the CQRS pattern - and do the same with the tests.
 
-Add a Department table and foreign key this into the User table. Add Interfaces, Handlers, Controllers and UI as necessary.
-
-Ditto an Address table.
-
-Add the functionality to be able to assign a 'Manager' to each user.
-
-Etc, etc...!
+Add a UserNumber field to enable unique identification of Users in the event that thaye have the same name and date of birth.
 
 # Other Resources
 
