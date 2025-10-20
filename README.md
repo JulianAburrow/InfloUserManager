@@ -26,6 +26,8 @@ Refactor the WebAPI project to use the CQRS pattern - and do the same with the t
 
 Add a UserNumber field to enable unique identification of Users in the event that thaye have the same name and date of birth.
 
+Add Search functionality to enable the location of Users by UserNumber, Forename, Surname etc
+
 # Other Resources
 
 See my ManufacturerManagerWebAPI repo for another (slightly more involved) example of my WebAPI applications.
