@@ -24,7 +24,7 @@ Pull the statuses in the Index page from the database rather than hard coding th
 
 Refactor the WebAPI project to use the CQRS pattern - and do the same with the tests.
 
-Add a UserNumber field to enable unique identification of Users. Currently in progress.
+Add a UserNumber field to enable unique identification of Users. Completed and available in feature branch.
 
 Add Search functionality to enable the location of Users by UserNumber, Forename, Surname etc
 
