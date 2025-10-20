@@ -13,7 +13,7 @@ public class UserStatusHandlerTests
     }
 
     [Fact]
-    public async Task GetUserStatuses_GetsAllUserStatuses()
+    public async Task GetUserStatusesAsync_GetsAllUserStatuses()
     {
         await RemoveAllUserStatusesFromContext();
 

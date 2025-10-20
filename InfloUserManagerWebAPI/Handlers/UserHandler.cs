@@ -2,11 +2,26 @@
 
 public class UserHandler(InfloUserManagerDbContext context) : IUserHandler
 {
+    public async Task<List<UserModel>> CheckForExistingUsersAsync(string userNumber, int id)
+    {
+        var users = await context.Users
+            .Where(
+                u => u.UserNumber == userNumber)
+            .ToListAsync();
+
+        if (id > 0)
+        {
+            users = [.. users.Where(u => u.UserId != id)];
+        }
+
+        return users;
+    }
 
     public async Task<ActionResult> CreateUserAsync(UserDTO userDTO)
     {
         var user = new UserModel
         {
+            UserNumber = userDTO.UserNumber,
             Forename = userDTO.Forename,
             Surname = userDTO.Surname,
             Email = userDTO.Email,
@@ -63,6 +78,7 @@ public class UserHandler(InfloUserManagerDbContext context) : IUserHandler
         var userDTO = new UserDTO
         {
             UserId = user.UserId,
+            UserNumber = user.UserNumber,
             Forename = user.Forename,
             Surname = user.Surname,
             Email = user.Email,
@@ -89,6 +105,7 @@ public class UserHandler(InfloUserManagerDbContext context) : IUserHandler
             userDTOs.Add(new UserDTO
             {
                 UserId = user.UserId,
+                UserNumber = user.UserNumber,
                 Forename = user.Forename,
                 Surname = user.Surname,
                 Email = user.Email,
@@ -111,6 +128,7 @@ public class UserHandler(InfloUserManagerDbContext context) : IUserHandler
             return new NotFoundObjectResult("No User with this id could be found");
         }
 
+        userToUpdate.UserNumber = userDTO.UserNumber;
         userToUpdate.Forename = userDTO.Forename;
         userToUpdate.Surname = userDTO.Surname;
         userToUpdate.Email = userDTO.Email;

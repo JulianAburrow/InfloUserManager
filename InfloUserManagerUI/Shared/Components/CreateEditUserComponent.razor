@@ -1,5 +1,6 @@
 ﻿<MudCardContent>
-    <MudTextField Label="Forename" @bind-Value="@UserDTO.Forename" AutoFocus OnlyValidateIfDirty="true" />
+    <MudTextField Label="User Number" @bind-Value="@UserDTO.UserNumber" AutoFocus OnlyValidateIfDirty="true" />
+    <MudTextField Label="Forename" @bind-Value="@UserDTO.Forename" />
     <MudTextField Label="Surname" @bind-Value="@UserDTO.Surname" />
     <MudTextField Label="Email" @bind-Value="@UserDTO.Email" />
     <MudDatePicker Label="Date of Birth" @bind-Date="@UserDTO.DateOfBirth" Editable />

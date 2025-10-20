@@ -2,6 +2,8 @@
 
 public interface IUserHandler
 {
+    Task<List<UserModel>> CheckForExistingUsersAsync(string userNumber, int id);
+
     Task<List<UserDTO>> GetUsersAsync();
 
     Task<UserDTO?> GetUserAsync(int id);

@@ -5,6 +5,11 @@ public class UserDTO
     public int UserId { get; set; }
 
     [Required(ErrorMessage = "{0} is required")]
+    [StringLength(20, ErrorMessage = "{0} cannot be more than {1} characters")]
+    [Display(Name = "User Number")]
+    public string UserNumber { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "{0} is required")]
     [StringLength(50, ErrorMessage = "{0} cannot be more than {1} characters")]
     public string Forename { get; set; } = string.Empty;
 

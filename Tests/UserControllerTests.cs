@@ -20,7 +20,7 @@ public class UserControllerTests
         _mockUserHandler.Setup(handler => handler.GetUsersAsync())
             .ReturnsAsync(mockUsers);
 
-        var result = await _userController.GetUsers();
+        var result = await _userController.GetUsersAsync();
 
         var returnValue = Assert.IsType<List<UserDTO>>(result.Value);
         Assert.Equal(2, returnValue.Count);

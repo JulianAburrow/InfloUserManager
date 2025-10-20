@@ -1,0 +1,46 @@
+﻿<MudTable Items="UserDTOs"
+          SortLabel="SortBy"
+          Hover
+          RowsPerPage="10"
+          FixedHeader
+          Height="700">
+    <HeaderContent>
+        <MudTh title="Sort by User Name">
+            <MudTableSortLabel SortBy="new Func<UserDTO, object>(x => x.UserNumber)">
+                User Number
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by Forename">
+            <MudTableSortLabel SortBy="new Func<UserDTO, object>(x => x.Forename)">
+                Forename
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by Surname">
+            <MudTableSortLabel SortBy="new Func<UserDTO, object>(x => x.Surname)">
+                Surname
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by Status">
+            <MudTableSortLabel SortBy="new Func<UserDTO, object>(x => x.StatusName)">
+                Status
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.UserNumber</MudTd>
+        <MudTd>@context.Forename</MudTd>
+        <MudTd>@context.Surname</MudTd>
+        <MudTd>@context.StatusName</MudTd>
+        <MudTd>
+            <a class="btn btn-primary" href="/user/view/@context.UserId">View</a>
+            &nbsp;
+            <a class="btn btn-primary" href="/user/edit/@context.UserId">Edit</a>
+            &nbsp;
+            <a class="btn btn-danger" href="/user/delete/@context.UserId">Delete</a>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, int.MaxValue }" />
+    </PagerContent>
+</MudTable>

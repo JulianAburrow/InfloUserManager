@@ -12,7 +12,7 @@ public class UserStatusControllerTests
     }
 
     [Fact]
-    public async Task GetUserStatuses_ReturnsListOfUserStatuses()
+    public async Task GetUserStatusesAsync_ReturnsListOfUserStatuses()
     {
         var status1 = "Status1";
         var status2 = "Status2";
@@ -25,7 +25,7 @@ public class UserStatusControllerTests
         _mockUserStatusHandler.Setup(handler => handler.GetUserStatusesAsync())
             .ReturnsAsync(mockUserStatuses);
 
-        var result = await _userStatusController.GetUserStatuses();
+        var result = await _userStatusController.GetUserStatusesAsync();
         var returnValue = Assert.IsType<List<UserStatusDTO>>(result);
 
         Assert.Equal(2, returnValue.Count);
