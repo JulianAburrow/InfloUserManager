@@ -5,7 +5,7 @@
 public class UserStatusController(IUserStatusHandler userStatusHandler) : ControllerBase
 {
     [HttpGet]
-    public async Task<List<UserStatusDTO>> GetUserStatuses()
+    public async Task<List<UserStatusDTO>> GetUserStatusesAsync()
     {
         return await userStatusHandler.GetUserStatusesAsync();
     }

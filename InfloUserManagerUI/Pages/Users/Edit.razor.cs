@@ -13,6 +13,8 @@ public partial class Edit
         {
             Snackbar.Add("An error occurred fetching User details.", Severity.Error);
         }
+
+        UserNumberExists = false;
     }
 
     protected override void OnInitialized()
@@ -27,6 +29,16 @@ public partial class Edit
 
     private async Task UpdateUser()
     {
+        UserNumberExists = false;
+
+        await CheckForExistingUsersAsync();
+
+        if (UserNumberExists)
+        {
+            Snackbar.Add($"A User with the User Number {UserDTO.UserNumber} already exists. Please choose an unique User Number.", Severity.Error);
+            return;
+        }
+
         var response = await Http.PutAsJsonAsync($"{UsersEndpoint}/{UserId}", UserDTO);
 
         if (response.IsSuccessStatusCode)

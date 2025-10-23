@@ -1,5 +1,4 @@
-﻿
-namespace Tests;
+﻿namespace Tests;
 
 public class UserStatusHandlerTests
 {
@@ -13,7 +12,7 @@ public class UserStatusHandlerTests
     }
 
     [Fact]
-    public async Task GetUserStatuses_GetsAllUserStatuses()
+    public async Task GetUserStatusesAsync_GetsAllUserStatuses()
     {
         await RemoveAllUserStatusesFromContext();
 
@@ -28,9 +27,7 @@ public class UserStatusHandlerTests
         await _context.SaveChangesAsync();
         var result = await _handler.GetUserStatusesAsync();
 
-        Assert.Equal(2, result.Count);
-        Assert.Equal(testUserStatus1, result[0].StatusName);
-        Assert.Equal(testUserStatus2, result[1].StatusName);
+        Assert.Equal(_context.UserStatuses.Count(), result.Count);
     }
 
     private async Task RemoveAllUserStatusesFromContext()

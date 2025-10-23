@@ -3,6 +3,12 @@
 
 <PageTitle>Create User</PageTitle>
 
+@if (UserNumberExists)
+{
+    <UserNumberExistsWarningComponent UserNumber="@UserDTO.UserNumber" />
+    <br />
+}
+
 <EditForm Model="@UserDTO" OnValidSubmit="CreateUser">
     <DataAnnotationsValidator />
     <ValidationSummary />

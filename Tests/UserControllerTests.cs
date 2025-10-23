@@ -14,39 +14,34 @@ public class UserControllerTests
     private readonly List<UserDTO> testUsers = Shared.GetTestUserDTOs();
 
     [Fact]
-    public async Task GetUsers_ReturnsListOfUsers()
+    public async Task GetUsersAsync_ReturnsListOfUsers()
     {
         var mockUsers = new List<UserDTO> { testUsers[0], testUsers[1], };
         _mockUserHandler.Setup(handler => handler.GetUsersAsync())
             .ReturnsAsync(mockUsers);
 
-        var result = await _userController.GetUsers();
+        var result = await _userController.GetUsersAsync();
 
         var returnValue = Assert.IsType<List<UserDTO>>(result.Value);
         Assert.Equal(2, returnValue.Count);
     }
 
     [Fact]
-    public async Task GetUser_ReturnsUser()
+    public async Task GetUserAsync_ReturnsUser()
     {
-        // Arrange
         var mockUser = testUsers[2];
         _mockUserHandler.Setup(handler => handler.GetUserAsync(1))
             .ReturnsAsync(mockUser);
 
-        // Act
         var actionResult = await _userController.GetUserAsync(1);
 
-        // Assert
-        // Check if the result is OkObjectResult and extract the value
         var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
         var returnedUser = Assert.IsType<UserDTO>(okResult.Value);
-        Assert.Equal(3, returnedUser.UserId);
         Assert.Equal("Test3", returnedUser.Forename);
     }
 
     [Fact]
-    public async Task GetUser_ReturnsNotFound_WhenUserNotFound()
+    public async Task GetUserAsync_ReturnsNotFound_WhenUserNotFound()
     {
         _mockUserHandler.Setup(handler => handler.GetUserAsync(1))
             .ReturnsAsync((UserDTO)null);
@@ -57,7 +52,7 @@ public class UserControllerTests
     }
 
     [Fact]
-    public async Task CreateUser_ReturnsOkResult_WhenCreateSuccessful()
+    public async Task CreateUserAsync_ReturnsOkResult_WhenCreateSuccessful()
     {
         var newUser = testUsers[3];
         _mockUserHandler.Setup(handler => handler.CreateUserAsync(newUser))
@@ -69,7 +64,35 @@ public class UserControllerTests
     }
 
     [Fact]
-    public async Task UpdateUser_ReturnsActionResult_WhenUpdateSuccessful()
+    public async Task CheckForExistingUsersAsync_ReturnsOk_WhenNoExistingUsers()
+    {
+        _mockUserHandler.Setup(handler => handler.CheckForExistingUsersAsync(testUsers[0].UserNumber, testUsers[0].UserId))
+            .ReturnsAsync(new List<UserModel>()); // Fix: Return List<UserModel> as per interface
+
+        var controller = new UserController(_mockUserHandler.Object);
+
+        var result = await controller.CheckForExistingUsersAsync(testUsers[0].UserNumber, testUsers[0].UserId);
+
+        var okResult = Assert.IsType<OkResult>(result.Result);
+        Assert.Equal((int)HttpStatusCode.OK, okResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task CheckForExistingUsersAsync_ReturnsConflict_WhenUsersExist()
+    {
+        _mockUserHandler.Setup(handler => handler.CheckForExistingUsersAsync(testUsers[1].UserNumber, testUsers[1].UserId))
+            .ReturnsAsync([new() { }]);
+
+        var controller = new UserController(_mockUserHandler.Object);
+
+        var result = await controller.CheckForExistingUsersAsync(testUsers[1].UserNumber, testUsers[1].UserId);
+
+        var conflictResult = Assert.IsType<ConflictResult>(result.Result);
+        Assert.Equal((int)HttpStatusCode.Conflict, conflictResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateUserAsync_ReturnsActionResult_WhenUpdateSuccessful()
     {
         var updatedUser = testUsers[0];
         _mockUserHandler.Setup(handler => handler.UpdateUserAsync(1, updatedUser))

@@ -9,6 +9,12 @@
     return;
 }
 
+@if (UserNumberExists)
+{
+    <UserNumberExistsWarningComponent UserNumber="@UserDTO.UserNumber" />
+    <br />
+}
+
 <EditForm Model="@UserDTO" OnValidSubmit="UpdateUser">
     <DataAnnotationsValidator />
     <ValidationSummary />

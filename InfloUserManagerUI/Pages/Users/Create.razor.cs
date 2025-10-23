@@ -15,10 +15,22 @@ public partial class Create
             GetUserHomeBreadcrumbItem(),
             GetCustomBreadcrumbItem(CreateTextForBreadcrumb),
         ]);
+
+        UserNumberExists = false;
     }
 
     private async Task CreateUser()
     {
+        UserNumberExists = false;
+
+        await CheckForExistingUsersAsync();
+
+        if (UserNumberExists)
+        {
+            Snackbar.Add($"A User with the User Number {UserDTO.UserNumber} already exists. Please choose an unique User Number.", Severity.Error);
+            return;
+        }
+
         var response = await Http.PostAsJsonAsync(UsersEndpoint, UserDTO);
 
         if (response.IsSuccessStatusCode)

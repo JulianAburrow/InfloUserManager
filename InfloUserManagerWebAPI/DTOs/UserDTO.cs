@@ -4,6 +4,8 @@ public class UserDTO
 {
     public int UserId { get; set; }
 
+    public string UserNumber { get; set; } = string.Empty;
+
     public string Forename { get; set; } = string.Empty;
 
     public string Surname { get; set; } = string.Empty;

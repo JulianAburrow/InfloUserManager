@@ -16,9 +16,36 @@ public class UserHandlerTests
     private readonly List<UserDTO> testUserDTOs = Shared.GetTestUserDTOs();
 
     [Fact]
-    public async Task GetUsers_GetsAllUsers()
+    public async Task CheckForExistingUsers_ReturnsNoUsers_WhenNotPresent()
     {
-        await RemoveAllUsersFromContext();
+        await RemoveAllUsersAndUserStatusesFromContext();
+
+        _context.Users.AddRange(testUserModels);
+        await _context.SaveChangesAsync();
+
+        var result = await _handler.CheckForExistingUsersAsync("U042", 2);
+
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public async Task CheckForExistingUsers_ReturnsUsers_WhenPresent()
+    {
+        await RemoveAllUsersAndUserStatusesFromContext();
+
+        _context.Users.AddRange(testUserModels);
+        await _context.SaveChangesAsync();
+
+        var result = await _handler.CheckForExistingUsersAsync("U002", 0);
+
+        Assert.Single(result);
+        Assert.Equal("U002", result[0].UserNumber);
+    }
+
+    [Fact]
+    public async Task GetUsersAsync_GetsAllUsers()
+    {
+        await RemoveAllUsersAndUserStatusesFromContext();
 
         _context.Users.AddRange(testUserModels);
         await _context.SaveChangesAsync();
@@ -33,24 +60,24 @@ public class UserHandlerTests
     }
 
     [Fact]
-    public async Task GetUser_GetsCorrectUser()
+    public async Task GetUserAsync_GetsCorrectUser()
     {
-        await RemoveAllUsersFromContext();
+        await RemoveAllUsersAndUserStatusesFromContext();
 
-        _context.Users.Add(testUserModels[1]);
+        _context.Users.Add(testUserModels[0]);
         await _context.SaveChangesAsync();
 
-        var result = await _handler.GetUserAsync(2);
+        var result = await _handler.GetUserAsync(1);
 
         Assert.NotNull(result);
-        Assert.Equal(testUserModels[1].Forename, result.Forename);
-        Assert.Equal(2, result.UserId);
+        Assert.Equal(testUserModels[0].Forename, result.Forename);
+        Assert.Equal(1, result.UserId);
     }
 
     [Fact]
-    public async Task GetUser_ReturnsNull_WhenUserDoesNotExist()
+    public async Task GetUserAsync_ReturnsNull_WhenUserDoesNotExist()
     {
-        await RemoveAllUsersFromContext();
+        await RemoveAllUsersAndUserStatusesFromContext();
 
         var result = await _handler.GetUserAsync(999);
 
@@ -58,29 +85,29 @@ public class UserHandlerTests
     }
 
     [Fact]
-    public async Task CreateUser_ReturnsCreatedResult_()
+    public async Task CreateUserAsync_ReturnsCreatedResult()
     {
-        await RemoveAllUsersFromContext();
+        await RemoveAllUsersAndUserStatusesFromContext();
 
         var result = await _handler.CreateUserAsync(testUserDTOs[0]);
 
         var createdResult = Assert.IsType<CreatedResult>(result);
         var createdUser = await _context.Users
-            .FirstOrDefaultAsync(c => c.Forename == testUserDTOs[0].Forename);
+            .FirstOrDefaultAsync(c => c.UserId == 1);
         Assert.NotNull(createdUser);
         Assert.Equal(testUserDTOs[0].Forename, createdUser.Forename);
     }
 
     [Fact]
-    public async Task UpdateUser_ReturnsOk()
+    public async Task UpdateUserAsync_ReturnsOk()
     {
-       await RemoveAllUsersFromContext();
+       await RemoveAllUsersAndUserStatusesFromContext();
 
-        _context.Users.Add(testUserModels[1]);            
+        _context.Users.Add(testUserModels[3]);            
         await _context.SaveChangesAsync();
 
         var createdUser = await _context.Users
-            .FirstOrDefaultAsync(c => c.Forename == testUserDTOs[1].Forename);
+            .FirstOrDefaultAsync(c => c.UserId == testUserModels[3].UserId);
         Assert.NotNull(createdUser);
 
         var result = await _handler.UpdateUserAsync(createdUser.UserId, testUserDTOs[2]);
@@ -89,15 +116,16 @@ public class UserHandlerTests
     }
 
     [Fact]
-    public async Task UpdateUser_ReturnsNotFound_WhenUserDoesNotExist()
+    public async Task UpdateUserAsync_ReturnsNotFound_WhenUserDoesNotExist()
     {
         var result = await _handler.UpdateUserAsync(999, testUserDTOs[3]);
         Assert.IsType<NotFoundObjectResult>(result);
     }
 
-    private async Task RemoveAllUsersFromContext()
+    private async Task RemoveAllUsersAndUserStatusesFromContext()
     {
         _context.Users.RemoveRange(_context.Users);
+        _context.UserStatuses.RemoveRange(_context.UserStatuses);
         await _context.SaveChangesAsync();
     }
 }

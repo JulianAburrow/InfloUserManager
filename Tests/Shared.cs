@@ -1,13 +1,11 @@
-﻿using InfloUserManagerWebAPI.Models;
-
-namespace Tests;
+﻿namespace Tests;
 
 public static class Shared
 {
     public static InfloUserManagerDbContext GetInMemoryDbContext()
     {
         var options = new DbContextOptionsBuilder<InfloUserManagerDbContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase")
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
 
         var context = new InfloUserManagerDbContext(options);
@@ -20,16 +18,16 @@ public static class Shared
     {
         return
         [
-            UserDTO1,
-            UserDTO2,
-            UserDTO3,
-            UserDTO4
+            CreateUserDTO1(),
+            CreateUserDTO2(),
+            CreateUserDTO3(),
+            CreateUserDTO4(),
         ];
     }
 
-    private static readonly UserDTO UserDTO1 = new()
+    private static UserDTO CreateUserDTO1() => new()
     {
-        UserId = 1,
+        UserNumber = "U001",
         Forename = "Test1",
         Surname = "User1",
         Email = "testuser1@test.com",
@@ -37,9 +35,9 @@ public static class Shared
         StatusId = 1,
     };
 
-    private static readonly UserDTO UserDTO2 = new()
+    private static UserDTO CreateUserDTO2() => new()
     {
-        UserId = 2,
+        UserNumber = "U002",
         Forename = "Test2",
         Surname = "User2",
         Email = "testuser2@test.com",
@@ -47,9 +45,9 @@ public static class Shared
         StatusId = 2,
     };
 
-    private static readonly UserDTO UserDTO3 = new()
+    private static UserDTO CreateUserDTO3() => new()
     {
-        UserId = 3,
+        UserNumber = "U003",
         Forename = "Test3",
         Surname = "User3",
         Email = "testuser3@test.com",
@@ -57,9 +55,9 @@ public static class Shared
         StatusId = 1,
     };
 
-    private static readonly UserDTO UserDTO4 = new()
+    private static UserDTO CreateUserDTO4() => new()
     {
-        UserId = 4,
+        UserNumber = "U004",
         Forename = "Test4",
         Surname = "User4",
         Email = "testuser4@test.com",
@@ -71,16 +69,16 @@ public static class Shared
     {
         return
         [
-            UserModel1,
-            UserModel2,
-            UserModel3,
-            UserModel4
+            CreateUserModel1(),
+            CreateUserModel2(),
+            CreateUserModel3(),
+            CreateUserModel4(),
         ];
     }
 
-    private static readonly UserModel UserModel1 = new()
+    private static UserModel CreateUserModel1() => new()
     {
-        UserId = 1,
+        UserNumber = "U001",
         Forename = "Test1",
         Surname = "User1",
         Email = "testuser1@test.com",
@@ -92,9 +90,9 @@ public static class Shared
         },
     };
 
-    private static readonly UserModel UserModel2 = new()
+    private static UserModel CreateUserModel2() => new()
     {
-        UserId = 2,
+        UserNumber = "U002",
         Forename = "Test2",
         Surname = "User2",
         Email = "testuser2@test.com",
@@ -106,9 +104,9 @@ public static class Shared
         },
     };
 
-    private static readonly UserModel UserModel3 = new()
+    private static UserModel CreateUserModel3() => new()
     {
-        UserId = 3,
+        UserNumber = "U003",
         Forename = "Test3",
         Surname = "User3",
         Email = "testuser3@test.com",
@@ -120,9 +118,9 @@ public static class Shared
         },
     };
 
-    private static readonly UserModel UserModel4 = new()
+    private static UserModel CreateUserModel4() => new()
     {
-        UserId = 4,
+        UserNumber = "U004",
         Forename = "Test4",
         Surname = "User4",
         Email = "testuser4@test.com",

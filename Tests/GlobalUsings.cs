@@ -7,3 +7,4 @@ global using InfloUserManagerWebAPI.DTOs;
 global using InfloUserManagerWebAPI.Handlers;
 global using InfloUserManagerWebAPI.Interfaces;
 global using InfloUserManagerWebAPI.Models;
+global using System.Net;
