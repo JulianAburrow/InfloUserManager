@@ -36,11 +36,16 @@ public partial class Index
 
     private async Task FilterUsers()
     {
-        FilteredUserDTOs = SelectedFilterOption switch
+        if (SelectedFilterOption > 0)
         {
-            1 or 2 => UserDTOs.Where(u => u.StatusId == SelectedFilterOption).ToList(),
-            _ => UserDTOs,
-        };
+            FilteredUserDTOs = UserDTOs.Where(u => u.StatusId == SelectedFilterOption).ToList();
+            return;
+        }
+        else
+        {
+            FilteredUserDTOs = UserDTOs;
+        }
+        
         await InvokeAsync(StateHasChanged);
     }
 }
