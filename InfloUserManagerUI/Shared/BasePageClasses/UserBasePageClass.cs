@@ -5,7 +5,7 @@ public class UserBasePageClass : BasePageClass
     [Parameter]
     public int UserId { get; set; }
 
-    protected UserDTO UserDTO = null!;
+    protected UserDTO UserDTO = new();
 
     protected bool UserNumberExists;
 
@@ -17,7 +17,7 @@ public class UserBasePageClass : BasePageClass
     protected async Task CheckForExistingUsersAsync()
     {
         var checkResponse = await Http
-            .GetAsync($"{UsersEndpoint}/check/{UserDTO.UserNumber}/{UserId}");
+            .GetAsync($"{UsersEndpoint}/checkusers/{UserDTO.UserNumber}/{UserId}");
         
         UserNumberExists = checkResponse.StatusCode.Equals(HttpStatusCode.Conflict);
     }

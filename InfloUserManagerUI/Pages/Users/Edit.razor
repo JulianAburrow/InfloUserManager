@@ -5,7 +5,7 @@
 
 @if (UserDTO == null)
 {
-    <MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Center">Loading User or User not found...</MudAlert>
+	<LoadingOrNotFoundWarningComponent ValueToShow="User" />
     return;
 }
 

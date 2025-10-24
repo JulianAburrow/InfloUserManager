@@ -37,7 +37,7 @@ public class UserControllerTests
 
         var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
         var returnedUser = Assert.IsType<UserDTO>(okResult.Value);
-        Assert.Equal("Test3", returnedUser.Forename);
+        Assert.Equal(testUsers[2].Forename, returnedUser.Forename);
     }
 
     [Fact]
@@ -66,28 +66,30 @@ public class UserControllerTests
     [Fact]
     public async Task CheckForExistingUsersAsync_ReturnsOk_WhenNoExistingUsers()
     {
-        _mockUserHandler.Setup(handler => handler.CheckForExistingUsersAsync(testUsers[0].UserNumber, testUsers[0].UserId))
-            .ReturnsAsync(new List<UserModel>()); // Fix: Return List<UserModel> as per interface
+        _mockUserHandler
+            .Setup(handler => handler.CheckForExistingUsersAsync(testUsers[0].UserNumber, testUsers[0].UserId))
+            .ReturnsAsync(0); // Simulate no existing users
 
         var controller = new UserController(_mockUserHandler.Object);
 
         var result = await controller.CheckForExistingUsersAsync(testUsers[0].UserNumber, testUsers[0].UserId);
 
-        var okResult = Assert.IsType<OkResult>(result.Result);
+        var okResult = Assert.IsType<OkResult>(result);
         Assert.Equal((int)HttpStatusCode.OK, okResult.StatusCode);
     }
 
     [Fact]
     public async Task CheckForExistingUsersAsync_ReturnsConflict_WhenUsersExist()
     {
-        _mockUserHandler.Setup(handler => handler.CheckForExistingUsersAsync(testUsers[1].UserNumber, testUsers[1].UserId))
-            .ReturnsAsync([new() { }]);
+        _mockUserHandler
+            .Setup(handler => handler.CheckForExistingUsersAsync(testUsers[1].UserNumber, testUsers[1].UserId))
+            .ReturnsAsync(1); // Simulate existing user
 
         var controller = new UserController(_mockUserHandler.Object);
 
         var result = await controller.CheckForExistingUsersAsync(testUsers[1].UserNumber, testUsers[1].UserId);
 
-        var conflictResult = Assert.IsType<ConflictResult>(result.Result);
+        var conflictResult = Assert.IsType<ConflictResult>(result);
         Assert.Equal((int)HttpStatusCode.Conflict, conflictResult.StatusCode);
     }
 
@@ -101,5 +103,31 @@ public class UserControllerTests
         var result = await _userController.UpdateUserAsync(1, updatedUser);
 
         Assert.IsType<OkResult>(result);
+    }
+
+
+    [Fact]
+    public async Task DeleteUserAsync_ReturnsOk_WhenUserExists()
+    {
+        _mockUserHandler.Setup(handler => handler.DeleteUserAsync(1))
+            .ReturnsAsync(new OkResult());
+
+        var result = await _userController.DeleteUserAsync(1);
+
+        var okResult = Assert.IsType<OkResult>(result);
+        Assert.Equal((int)HttpStatusCode.OK, okResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteUserAsync_ReturnsNotFound_WhenUserDoesNotExist()
+    {
+        _mockUserHandler.Setup(handler => handler.DeleteUserAsync(999))
+            .ReturnsAsync(new NotFoundObjectResult("User not found"));
+
+        var result = await _userController.DeleteUserAsync(999);
+
+        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
+        Assert.Equal((int)HttpStatusCode.NotFound, notFoundResult.StatusCode);
+        Assert.Equal("User not found", notFoundResult.Value);
     }
 }

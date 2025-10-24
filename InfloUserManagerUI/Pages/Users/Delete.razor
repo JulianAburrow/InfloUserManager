@@ -7,11 +7,11 @@
 
 @if (UserDTO is null)
 {
-    <MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Center">Loading User or User not found...</MudAlert>
+	<LoadingOrNotFoundWarningComponent ValueToShow="User" />
     return;
 }
 
-<MudAlert Severity="Severity.Warning" ContentAlignment="HorizontalAlignment.Center">Are you sure you want to delete this User?</MudAlert>
+<ConfirmDeleteComponent ItemName="User" />
 
 <br />
 

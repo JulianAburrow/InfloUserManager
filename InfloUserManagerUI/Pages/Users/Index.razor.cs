@@ -4,12 +4,15 @@ public partial class Index
 {
     private List<UserDTO> UserDTOs = null!;
     private List<UserDTO> FilteredUserDTOs = null!;
+    private List<UserStatusDTO> UserStatusDTOs = null!;
     private int SelectedFilterOption = 0;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
+            UserStatusDTOs = await Http.GetFromJsonAsync<List<UserStatusDTO>>(UserStatusesEndpoint) ?? [];
+            UserStatusDTOs.Insert(0, new UserStatusDTO { StatusId  = AllValue, StatusName = All });
             UserDTOs = await Http.GetFromJsonAsync<List<UserDTO>>(UsersEndpoint) ?? [];
             FilteredUserDTOs = UserDTOs;
             Snackbar.Add($"{UserDTOs.Count} item(s) found.", UserDTOs.Count > 0 ? Severity.Info : Severity.Warning);

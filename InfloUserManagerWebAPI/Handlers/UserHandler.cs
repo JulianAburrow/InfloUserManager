@@ -2,7 +2,7 @@
 
 public class UserHandler(InfloUserManagerDbContext context) : IUserHandler
 {
-    public async Task<List<UserModel>> CheckForExistingUsersAsync(string userNumber, int id)
+    public async Task<int> CheckForExistingUsersAsync(string userNumber, int id)
     {
         var users = await context.Users
             .Where(
@@ -14,7 +14,7 @@ public class UserHandler(InfloUserManagerDbContext context) : IUserHandler
             users = [.. users.Where(u => u.UserId != id)];
         }
 
-        return users;
+        return users.Count;
     }
 
     public async Task<ActionResult> CreateUserAsync(UserDTO userDTO)

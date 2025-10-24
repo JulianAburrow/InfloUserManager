@@ -1,0 +1,23 @@
+﻿@page "/userstatuses/index"
+@inherits  UserStatusBasePageClass
+
+<PageTitle>User Statuses</PageTitle>
+
+<a href="/userstatus/create" class="btn btn-primary">Create User Status</a>
+
+<br />
+<br />
+
+@if (UserStatusDTOs == null)
+{
+	<MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Center">Loading User Statuses...</MudAlert>
+	return;
+}
+
+@if (UserStatusDTOs.Count == 0)
+{
+	<MudAlert Severity="Severity.Warning" ContentAlignment="HorizontalAlignment.Center">No User Statuses found.</MudAlert>
+	return;
+}
+
+<ListUserStatusesComponent UserStatusDTOs="UserStatusDTOs" />

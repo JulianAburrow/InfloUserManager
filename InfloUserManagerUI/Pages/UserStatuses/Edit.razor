@@ -1,0 +1,44 @@
+﻿@page "/userstatus/edit/{UserStatusId:int}"
+@inherits UserStatusBasePageClass
+
+<PageTitle>Edit User Status</PageTitle>
+
+@if (UserStatusDTO == null)
+{
+	<LoadingOrNotFoundWarningComponent ValueToShow="User Status" />
+	return;
+}
+
+@if (UserStatusDTO.UserCount > 0)
+{
+	<MudAlert Severity="Severity.Warning" ContentAlignment="HorizontalAlignment.Center">
+		Be aware that changing the Status '@UserStatusDTO.StatusName' will alter the status of @UserStatusDTO.UserCount user(s).
+	</MudAlert>
+}
+
+<br />
+
+@if (UserStatusNameExists)
+{
+	<UserStatusExistsWarningComponent UserStatusName="@UserStatusDTO.StatusName" />
+	<br />
+}
+
+<EditForm Model="@UserStatusDTO" OnValidSubmit="UpdateUserStatus">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+
+	<MudGrid>
+		<MudItem sm="7">
+			<MudCard>
+				<CreateEditUserStatusComponent UserStatusDTO="@UserStatusDTO" />
+				<MudCardActions>
+					<input type="submit" class="btn btn-primary" value="Update" />
+					&nbsp;
+					<a href="/userstatuses/index" class="btn btn-secondary">Cancel</a>
+				</MudCardActions>
+			</MudCard>
+		</MudItem>
+	</MudGrid>
+
+</EditForm>

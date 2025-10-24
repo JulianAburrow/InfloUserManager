@@ -1,0 +1,27 @@
+﻿@page "/userstatus/create"
+@inherits UserStatusBasePageClass
+
+<PageTitle>Create User Status</PageTitle>
+
+@if (UserStatusNameExists)
+{
+	<UserStatusExistsWarningComponent UserStatusName="@UserStatusDTO.StatusName" />
+	<br />
+}
+
+<EditForm Model="@UserStatusDTO" OnValidSubmit="CreateUserStatus">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<MudGrid>
+		<MudItem sm="7">
+			<MudCard>
+				<CreateEditUserStatusComponent UserStatusDTO="@UserStatusDTO" />
+				<MudCardActions>
+					<button type="submit" class="btn btn-primary">Create</button>
+					&nbsp;
+					<a href="/userstatuses/index" class="btn btn-secondary">Cancel</a>
+				</MudCardActions>
+			</MudCard>
+		</MudItem>
+	</MudGrid>
+</EditForm>

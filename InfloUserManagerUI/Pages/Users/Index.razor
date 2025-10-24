@@ -27,9 +27,10 @@
         @bind-Value="SelectedFilterOption"
         @bind-Value:after="@FilterUsers"
         style="width: 50px">
-        <MudSelectItem Value="0">All</MudSelectItem>
-        <MudSelectItem Value="1">Active</MudSelectItem>
-        <MudSelectItem Value="2">Inactive</MudSelectItem>
+        @foreach (var userStatusDTO in UserStatusDTOs)
+        {
+            <MudSelectItem Value="@userStatusDTO.StatusId">@userStatusDTO.StatusName</MudSelectItem>
+		}
     </MudSelect>
 </MudPaper>
 

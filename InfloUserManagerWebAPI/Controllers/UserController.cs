@@ -1,4 +1,4 @@
-﻿using System.Net;
+﻿
 
 namespace InfloUserManagerWebAPI.Controllers;
 
@@ -6,12 +6,12 @@ namespace InfloUserManagerWebAPI.Controllers;
 [ApiController]
 public class UserController(IUserHandler userHandler) : ControllerBase
 {
-    [HttpGet("check/{userNumber}/{id}")]
-    public async Task<ActionResult<HttpStatusCode>> CheckForExistingUsersAsync(string userNumber, int id)
+    [HttpGet("checkusers/{userNumber}/{id}")]
+    public async Task<IActionResult> CheckForExistingUsersAsync(string userNumber, int id)
     {
-        var users = await userHandler.CheckForExistingUsersAsync(userNumber, id);
+        var userCount = await userHandler.CheckForExistingUsersAsync(userNumber, id);
 
-        return users.Count == 0 ? Ok() : Conflict();
+        return userCount == 0 ? Ok() : Conflict();
     }
 
     [HttpGet]

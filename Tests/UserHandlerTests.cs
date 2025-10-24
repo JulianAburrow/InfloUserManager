@@ -16,7 +16,7 @@ public class UserHandlerTests
     private readonly List<UserDTO> testUserDTOs = Shared.GetTestUserDTOs();
 
     [Fact]
-    public async Task CheckForExistingUsers_ReturnsNoUsers_WhenNotPresent()
+    public async Task CheckForExistingUsers_ReturnsZero_WhenUserNotPresent()
     {
         await RemoveAllUsersAndUserStatusesFromContext();
 
@@ -25,11 +25,11 @@ public class UserHandlerTests
 
         var result = await _handler.CheckForExistingUsersAsync("U042", 2);
 
-        Assert.Empty(result);
+        Assert.Equal(0, result);
     }
 
     [Fact]
-    public async Task CheckForExistingUsers_ReturnsUsers_WhenPresent()
+    public async Task CheckForExistingUsers_ReturnsNonZeroInteger_WhenUserPresent()
     {
         await RemoveAllUsersAndUserStatusesFromContext();
 
@@ -38,8 +38,7 @@ public class UserHandlerTests
 
         var result = await _handler.CheckForExistingUsersAsync("U002", 0);
 
-        Assert.Single(result);
-        Assert.Equal("U002", result[0].UserNumber);
+        Assert.True(result > 0);
     }
 
     [Fact]

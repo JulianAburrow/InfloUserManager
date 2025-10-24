@@ -13,4 +13,8 @@ public static class GlobalValues
     public static int NoneValue = 0;
 
     public static string None = "None";
+
+    public static int AllValue = 0;
+
+    public static string All = "All";
 }

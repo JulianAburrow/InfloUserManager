@@ -1,0 +1,32 @@
+﻿@page "/userstatus/view/{UserStatusId:int}"
+@inherits UserStatusBasePageClass
+
+<PageTitle>View User Status</PageTitle>
+
+<br />
+
+@if (UserStatusDTO is null)
+{
+	<LoadingOrNotFoundWarningComponent ValueToShow="User Status" />
+	return;
+}
+
+<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <MudCardContent>
+                <ViewDeleteUserStatusComponent UserStatusDTO="UserStatusDTO" />
+            </MudCardContent>
+            <MudCardActions>
+                <a href="userstatus/edit/@UserStatusDTO.StatusId" class="btn btn-primary">Edit</a>
+                @if (OkToDelete)
+                {
+                    @:&nbsp;
+                    <a href="userstatus/delete/@UserStatusDTO.StatusId" class="btn btn-danger">Delete</a>
+                }
+                &nbsp;
+                <a href="/userstatuses/index" class="btn btn-secondary">Back to List</a>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>

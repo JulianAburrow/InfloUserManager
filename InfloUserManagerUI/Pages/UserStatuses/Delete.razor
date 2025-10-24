@@ -1,0 +1,42 @@
+﻿@page "/userstatus/delete/{UserStatusId:int}"
+@inherits UserStatusBasePageClass
+
+<PageTitle>Delete User Status</PageTitle>
+
+<br />
+
+@if (UserStatusDTO is null)
+{
+	<LoadingOrNotFoundWarningComponent ValueToShow="User Status" />
+	return;
+}
+
+@if (!OkToDelete)
+{
+	<MudAlert Severity="Severity.Error" ContentAlignment="HorizontalAlignment.Center">Cannot delete the User Status '@UserStatusDTO.StatusName' as there are Users with this status.</MudAlert>
+	<br />
+	<a href="/userstatuses/index" class="btn btn-secondary">Back to List</a>
+	return;
+}
+
+<ConfirmDeleteComponent ItemName="User Status" />
+
+<br />
+
+<MudGrid>
+	<MudItem sm="7">
+		<MudCard>
+			<MudCardContent>
+				<ViewDeleteUserStatusComponent UserStatusDTO="UserStatusDTO" />
+			</MudCardContent>
+			<MudCardActions>
+				@if (OkToDelete)
+				{
+					<button class="btn btn-danger" @onclick="DeleteUserStatus">Delete</button>
+				}
+				&nbsp;
+				<a href="/userstatuses/index" class="btn btn-secondary">Back to List</a>
+			</MudCardActions>
+		</MudCard>
+	</MudItem>
+</MudGrid>

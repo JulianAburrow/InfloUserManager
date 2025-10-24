@@ -4,10 +4,7 @@ public partial class Create
 {
     protected override void OnInitialized()
     {
-        UserDTO = new()
-        {
-            StatusId = SelectValue
-        };
+        UserDTO.StatusId = SelectValue;
         MainLayout.SetHeaderValue("Create User");
         MainLayout.SetBreadCrumbs(
         [

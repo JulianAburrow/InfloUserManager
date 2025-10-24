@@ -1,0 +1,37 @@
+﻿<MudTable Items="UserStatusDTOs"
+          SortLabel="SortBy"
+          Hover
+          RowsPerPage="10"
+          FixedHeader
+          Height="700">
+    <HeaderContent>
+        <MudTh title="Sort by Status Name">
+            <MudTableSortLabel SortBy="new Func<UserStatusDTO, object>(x => x.StatusName)">
+                Status Name
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh title="Sort by User Count">
+            <MudTableSortLabel SortBy="new Func<UserStatusDTO, object>(x => x.UserCount)">
+                User Count
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.StatusName</MudTd>
+        <MudTd>@context.UserCount</MudTd>
+        <MudTd>
+            <a class="btn btn-primary" href="/userstatus/view/@context.StatusId">View</a>
+            &nbsp;
+            <a class="btn btn-primary" href="/userstatus/edit/@context.StatusId">Edit</a>
+            @if (context.UserCount == 0)
+            {
+                @:&nbsp;
+                <a class="btn btn-danger" href="/userstatus/delete/@context.StatusId">Delete</a>
+            }
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[] { 5, 10, 25, 50, 100, int.MaxValue }" />
+    </PagerContent>
+</MudTable>

@@ -131,4 +131,42 @@ public static class Shared
             StatusName = "Inactive",
         },
     };
+
+    public static List<UserStatusDTO> GetTestUserStatusDTOs()
+    {
+        return
+        [
+            CreateUserStatusDTO1(),
+            CreateUserStatusDTO2(),
+        ];
+    }
+
+    private static UserStatusDTO CreateUserStatusDTO1() => new()
+    {
+        StatusName = "Active",
+    };
+
+    private static UserStatusDTO CreateUserStatusDTO2() => new()
+    {
+        StatusName = "Inactive",
+    };
+
+    public static List<UserStatusModel> GetTestUserStatusModels()
+    {
+        return
+        [
+            CreateUserStatusModel1(),
+            CreateUserStatusModel2(),
+        ];
+    }
+
+    private static UserStatusModel CreateUserStatusModel1() => new()
+    {
+        StatusName = "Active",
+    };
+
+    private static UserStatusModel CreateUserStatusModel2() => new()
+    {
+        StatusName = "Inactive",
+    };
 }
